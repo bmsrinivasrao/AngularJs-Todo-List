@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    body {
+        background: #B0BEC5;
+    }
+    
+    .tabs {
+        background: #009688;
+        color: #fff;
+    }
+    
+    h3 {
+        text-transform: uppercase;
+    }
+    
+    .button {
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        margin-top: 15px;
+        border: 1px solid #fff;
+    }
+    
+    .inputBox {
+        border-radius: 8px;
+    }
+    
+    .main,
+    header {
+        border-radius: 10px 10px 0px 0px;
+        background: #CFD8DC !important;
+        color: #546E7A;
+    }
+    
+    input:placeholder-shown,
+    .inputBox {
+        text-align: center;
+    }
+    
+    .close {
+        background: #E53935;
+        padding: 4px;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        font-weight: bold;
+        margin-top: -1px;
+        line-height: 15px;
+    }
+    .close i{
+        font-size: 12px;
+    }
+    
+    .foot {
+        padding: 20px;
+        color: #546E7A;
+    }
+    
+    .foot a {
+        text-decoration: none;
+    }
+</style>
+
+<body>
+
+    <script>
+        var app = angular.module("myShoppingList", []);
+        app.controller("myCtrl", function($scope) {
+            $scope.products = ["Buy Groceries", "Pay Credit Bill", "Get Laundary", "Office Work Due"];
+            $scope.addItem = function() {
+                $scope.errortext = "";
+                if (!$scope.addMe) {
+                    return;
+                }
+                if ($scope.products.map(v => v.toLowerCase()).indexOf($scope.addMe.toLowerCase()) == -1) {
+                    $scope.products.push($scope.addMe);
+                    $scope.addMe = "";
+                } else {
+                    $scope.errortext = "The item is already in the list.";
+                }
+            }
+            $scope.removeItem = function(x) {
+                $scope.errortext = "";
+                $scope.products.splice(x, 1);
+            }
+        });
+    </script>
+    <center>
+        <div ng-app="myShoppingList" ng-cloak ng-controller="myCtrl" class="w3-card-2 w3-margin main" style="max-width:400px;">
+            <header class="w3-container  w3-padding-16">
+                <h3>to do list</h3>
+            </header>
+            <ul class="w3-ul tabs">
+                <li ng-repeat="x in products" class="w3-padding-16">{{x}}<span ng-click="removeItem($index)" style="cursor:pointer;" class="w3-right w3-margin-right close"><i class="fa fa-check" aria-hidden="true"></i></span></li>
+            </ul>
+            <div class="w3-container w3-padding-16">
+                <div class="w3-row w3-margin-top">
+                    <div class="w3-col s12">
+                        <input placeholder="Enter item here" ng-model="addMe" class="w3-input w3-border w3-padding inputBox">
+                    </div>
+                </div>
+                <div class="w3-row">
+                    <div class="w3-col s12">
+                        <button ng-click="addItem()" class="w3-btn w3-padding w3-blue button w3-card-2"><i class="fa fa-plus" aria-hidden="true"></i> </button>
+                    </div>
+                </div>
+                <p class="w3-text-red">{{errortext}}</p>
+            </div>
+        </div>
+        <div class="foot">
+            &copy; 2017 MSRB Reference: <a href="https://www.w3schools.com/angular/angular_application.asp" target="_blank">W3schools</a>
+        </div>
+    </center>
+</body>
+</html>
